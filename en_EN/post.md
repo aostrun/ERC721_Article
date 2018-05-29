@@ -1,26 +1,28 @@
 
 <!--- Title: ERC721 Demystified --->
 ## Introduction
-In this tutorial we'll go over proposed ERC721 standard, explain why it is useful
-and show example of ERC721 usage.
+In this tutorial, we'll go over proposed ERC721 standard, explain why it is useful
+and show an example of ERC721 usage.
 
 The following content is recommended reading before if you plan to follow this tutorial:
 * [Solidity Development Crash Course](https://bitfalls.com/2018/03/31/solidity-development-crash-course-building-blockchain-raffle/)
 * [How to Run Your Own Private Ethereum Blockchain](https://bitfalls.com/2018/03/31/solidity-development-crash-course-building-blockchain-raffle/)
 
 ### ERC721 Motivation
-Not a long time ago everybody was taking about a new (and probably one of the first) blockchain based game called [CryptoKitties](https://www.cryptokitties.co/) that used
-tokens to represent each <i>CryptoKitty</i> and people went crazy about collecting virtual kittens. Game quickly gained popularity and
-in it's peek popularity users even managed to clog the Ethereum Blockchain with transactions
+Not a long time ago everybody was talking about a new (and probably one of the first) blockchain based game called [CryptoKitties](https://www.cryptokitties.co/) that used
+tokens to represent each <i>CryptoKitty</i> and people went crazy about collecting virtual kittens. The game quickly gained popularity and
+in its peak popularity users even managed to clog the Ethereum Blockchain with transactions
 connected to <i>CryptoKitties</i>. Some people made a decent paycheck by breeding and selling their kittens, today some kittens are being sold for ridiculous values, we are talking about hundreds of thousands of dollars for a kitten from the first generation.
 You can easily find similarities between <i>CryptoKitties</i> and collectibles like Pokémon cards and sports cards (baseball, football, etc.).
 
-Image bellow shows example of a <i>CryptoKitty</i>, you can see ridiculous sales bellow kitten. Also you can see that each kitten has attributes that makes it unique, this kitten in this example is, among other attributes, jaguar and crazy.
+The image below shows an example of a <i>CryptoKitty</i>, you can see ridiculous sales bellow kitten. Also, you can see that each kitten has attributes that make it unique, this kitten in this example is, among other attributes, jaguar and crazy.
 ![Founder Cat #18](../images/03.jpg)
 *Founder Cat #18*
 
 
-Collectible items like <i>CryptoKitties</i> where items differ one from another and each items has it's own uniqueness you have to use tokens that will account for that. In this case each token will have to be distinguished from each other because each token will represent unique item. Here ERC721 comes into play.
+Collectible items like <i>CryptoKitties</i> where items differ one from another and each item has its own uniqueness you have to use tokens that will account for that. In this case, each token will have to be distinguished from each other because each token will represent a unique item. Here ERC721 comes into play.
+
+<!-- Grammarly checked -->
 
 ### Fungibility
 The ERC721 is a proposed interface for non-fungible tokens, so let's first explain what they
@@ -28,22 +30,24 @@ mean by saying non-fungible.
 >In economics, <b>fungibility</b> is the property of a good or commodity whose individual units are essentially interchangeable. [[Wiki]](https://en.wikipedia.org/wiki/Fungibility)
 
 Ethereum's Ethers are fungible because they are interchangeable, there is no difference between two
-Ethers. Same as fiat currencies, let's take dollar as an example, dollar is fungible because if Alice has a $5 bill and Bob has a $5 bill there is no difference between their bills, they can even switch their bills and no one will be at loss or profit. In contrast to Ether, collectibles like Pokémon cards are not fungible because cards are not interchangeable, some cards are worth more then others because of their rarity or individual properties.
+Ethers. Same as fiat currencies, let's take dollar as an example, the dollar is fungible because if Alice has a $5 bill and Bob has a $5 bill there is no difference between their bills, they can even switch their bills and no one will be at loss or profit. In contrast to Ether, collectibles like Pokémon cards are not fungible because cards are not interchangeable, some cards are worth more than others because of their rarity or individual properties.
 >If we take a look at the current market of Pokémon cards we can see that the first edition cards
-> are valued more than the cards from the newer editions. In the each edition there are some
-> cards that are rarer then other cards and they are the most expensive in their individual editions.
+> are valued more than the cards from the newer editions. In each edition there are some
+> cards that are rarer than other cards and they are the most expensive in their individual editions.
 > Some Pokémons are present in multiple editions but they are not fungible because editions differentiate them.
-> You can argue that the two identical Pokémon cads are fungible but even then card that is in better physical
+> You can argue that the two identical Pokémon cards are fungible but even then card that is in better physical
 > condition is worth more.
 
 ![Charizard](../images/01.jpg "Charizard 1st edition") | ![Diglett](../images/02.jpg)
 :-----------------------------------------------------:|:---------------------------:
 Charizard first edition rare card, [Source](https://www.trollandtoad.com/p907921.html)  |  Diglett first edition common card, [Source](https://www.trollandtoad.com/p907930.html)  
 
+<!--- Grammarly checked --->
+
 <!--- TODO: Add more examples? --->
 ---
 ### Use cases
-Now that you hopefully understand the term fungibility we can explain why non-fungible tokens are useful. First use case and probably the one that makes the most sense is implementation any kind of collectables on the blockchain as the non-fungible token, [<i>CryptoKitties</i>](https://www.cryptokitties.co/) is the perfect example of that. Other use cases include examples like [<i>WePower</i>](https://wepower.network/) that is using non-fungible token to represent different types of energy (solar, wind, hydro, etc.). ERC721 standard is allowing us to create non-fungible tokens that can represent such collectibles and commodities on the blockchain.
+Now that you hopefully understand the term fungibility we can explain why non-fungible tokens are useful. First use case and probably the one that makes the most sense is implementation any kind of collectibles on the blockchain as the non-fungible token, [<i>CryptoKitties</i>](https://www.cryptokitties.co/) is the perfect example of that. Other use cases include examples like [<i>WePower</i>](https://wepower.network/) that is using a non-fungible token to represent different types of energy (solar, wind, hydro, etc.). The ERC721 standard is allowing us to create non-fungible tokens that can represent such collectibles and commodities on the blockchain.
 
 ## ERC721 Interface
 Now that we know the idea behind ERC721 tokens we can dive into the proposed interface itself.
@@ -67,14 +71,15 @@ interface ERC721{
     function isApprovedForAll(address _owner, address _operator) external view returns (bool);
 }
 ```
+<!--- Grammarly checked --->
 
 ### Example code
 > <span style="color:red">WARNING: </span> The following code is for educational purposes only. This code is missing major security features for the sake of simplicity.
 
-In this example we will create our own version of collectible game conveniently called <i><b>Cryptomon</i></b>. Our Cryptomons will have rarity and type attributes, two attacks and a strength value. We will categorize Cryptomons in four different rarity categories; Common, Rare, Epic and Legendary. Common being the most common and Legendary being the rarest. Cryptomons will also be categorized in different types, similar to Pokémons our Cryptomons can be fire type, water type etc. Two attacks allow our Cryptomons to be used in duels and strength of those attacks depends on the strength attribute.
+In this example we will create our own version of collectible game conveniently called <i><b>Cryptomon</i></b>. Our Cryptomons will have rarity and type attributes, two attacks and a strength value. We will categorize Cryptomons in four different rarity categories; Common, Rare, Epic and Legendary. Common being the most common and Legendary being the rarest. Cryptomons will also be categorized into different types, similar to Pokémons our Cryptomons can be a fire type, water type etc. Two attacks allow our Cryptomons to be used in duels and strength of those attacks depends on the strength attribute.
 
 
-First we'll go over the data structure of our contract.
+First, we'll go over the data structure of our contract.
 
 ```javascript
   enum RarityEnum {Common, Rare, Epic, Legendary}
@@ -94,19 +99,19 @@ First we'll go over the data structure of our contract.
   mapping(address => mapping(address => bool)) internal operatorApprovals;
   mapping(uint256 => Cryptomon) internal tokenCryptomon;
 ```
-Enumerations (<b><i>enum</i></b>) are custom types that can only be assigned to the specific value set. In the example above, <b><i>RarityEnum</i></b> is enumeration that represents rarity of the token and defines set of possible values {<i>Common</i>, <i>Rare</i>, <i>Epic</i>, <i>Legendary</i>} which we can use as a data type later on. Also <b><i>CryptomonTypeEnum</i></b> is used to represent the Cryptomon type, similar to Pokémon types.
+Enumerations (<b><i>enum</i></b>) are custom types that can only be assigned to the specific value set. In the example above, <b><i>RarityEnum</i></b> is enumeration that represents rarity of the token and defines set of possible values {<i>Common</i>, <i>Rare</i>, <i>Epic</i>, <i>Legendary</i>} which we can use as a data type later on. Also, <b><i>CryptomonTypeEnum</i></b> is used to represent the Cryptomon type, similar to Pokémon types.
 
-Structures (<b><i>struct</i></b>) are also custom types but opposite to <i>enums</i> they can hold different types inside of them, in the example above <b><i>Cryptomon</i></b> is a structure that is describing an Cryptomon entity, so Cryptomon has a name, rarity (which is enum type <i>RarityEnum</i>), type (which is enum type <i>CryptomonTypeEnum</i>), two attacks and strength attribute.
+Structures (<b><i>struct</i></b>) are also custom types but opposite to <i>enums</i> they can hold different types inside of them, in the example above <b><i>Cryptomon</i></b> is a structure that is describing a Cryptomon entity, so Cryptomon has a name, rarity (which is enum type <i>RarityEnum</i>), type (which is enum type <i>CryptomonTypeEnum</i>), two attacks and strength attribute.
 
 #### Mappings:
-* `tokenOwner` assigns ID of the token to its owner's address.
-* `tokenApprovals` assigns ID of the token to the address that is approved to transfer this token. Basically this address is like secondary owner.
-* `ownedTokensCount` assigns address to the number of tokens that this address owns. This is just a number and we can't access the tokens directly from this mapping.
-* `operatorApprovals` assigns multiple operator addresses to the owner address. Operator can transfer all the tokens on behalf of their owner. Difference between `operatorApprovals` and `tokenApprovals` is that `tokenApprovals` allows single address to transfer single token while `operatorApprovals` allows multiple addresses to transfer on behalf of owner address.
+* `tokenOwner` assigns the ID of the token to its owner's address.
+* `tokenApprovals` assigns the ID of the token to the address that is approved to transfer this token. Basically, this address is like a secondary owner.
+* `ownedTokensCount` assigns an address to the number of tokens that this address owns. This is just a number and we can't access the tokens directly from this mapping.
+* `operatorApprovals` assigns multiple operator addresses to the owner address. The operator can transfer all the tokens on behalf of their owner. Difference between `operatorApprovals` and `tokenApprovals` is that `tokenApprovals` allows a single address to transfer single token while `operatorApprovals` allows multiple addresses to transfer on behalf of owner address.
 * `tokenCryptomon` assigns Cryptomon to the token ID.
 
 #### Events:
-* `Transfer(address _from, address _to, uint256 _tokenId)` - Event is triggered whenever a successful transfer of token happends. Event describes who sent token to whom (`_from` and `_to`) and which token is being transfered (`_tokenId`).
+* `Transfer(address _from, address _to, uint256 _tokenId)` - Event is triggered whenever a successful transfer of token happens. The event describes who sent the token to whom (`_from` and `_to`) and which token is being transferred (`_tokenId`).
 * `Approval(address _owner, address _approved, uint256 _tokenId)` - Event is triggered whenever new address (`_approved`) is approved to operate on a given token (`_tokenId`) on behalf of the token owner (`_owner`).
 * `ApprovalForAll(address _owner, address _operator, bool _approved)` - Event is triggered whenever an operator's (`_operator`) permission to operate on behalf of the owner (`_owner`) is granted or revoked. If the given value `_approved` is True then permission is being granted otherwise it's being revoked.
 
@@ -146,7 +151,7 @@ function balanceOf(address _owner) external view returns (uint256){
   return ownedTokensCount[_owner];
 }
 ```
-Function is pretty self explanatory, returns the number of tokens that given address `_owner` owns. At the start we require that the given address is not null address, this is just for security measures protecting user from mistakenly calling this function with the null address. As we declared earlier, mapping `ownedTokensCount` holds the number of tokens that each address owns so we return the value that is stored in that mapping.
+The function is pretty self-explanatory, returns the number of tokens that given address `_owner` owns. At the start we require that the given address is not null address, this is just for security measures protecting the user from mistakenly calling this function with the null address. As we declared earlier, mapping `ownedTokensCount` holds the number of tokens that each address owns so we return the value that is stored in that mapping.
 
 ```javascript
 function ownerOf(uint256 _tokenId) external view returns (address){
@@ -155,14 +160,14 @@ function ownerOf(uint256 _tokenId) external view returns (address){
   return owner;
 }
 ```
-Function returns the owner of the given token. Mapping `tokenOwner` holds the record of owners per token ID so we read value from that mapping. Because of how mappings work in Solidity (mappings are from the start zero initialized) if the owner of the token is null address we act as that token is not created yet.
+The function returns the owner of the given token. Mapping `tokenOwner` holds the record of owners per token ID so we read the value from that mapping. Because of how mappings work in Solidity (mappings are from the start zero initialized) if the owner of the token is null address we act as that token is not created yet.
 
 ```javascript
 function isApprovedForAll(address _owner, address _operator) public view returns (bool) {
     return operatorApprovals[_owner][_operator];
   }
 ```
-With this function we check if the given `_operator` can operate (transfer tokens) on behalf of `_owner`. To check this we read mapping `operatorApprovals` which stores addresses that can operate on behalf of the key address.
+With this function, we check if the given `_operator` can operate (transfer tokens) on behalf of `_owner`. To check this we read mapping `operatorApprovals` which stores address that can operate on behalf of the key address.
 
 
 
@@ -171,7 +176,7 @@ function getApproved(uint256 _tokenId) external view returns (address){
   return tokenApprovals[_tokenId];
 }
 ```
-This function returns the address that is approved to operate with this token. This is separate from the operators that can operate on behalf of the owner, it's similar but in this case approved address has privileges only to operate on specific token and not all other tokens of the owner. Mapping `tokenApprovals` holds the record of token IDs and the addresses approved for them so we read value from this mapping.
+This function returns the address that is approved to operate with this token. This is separate from the operators that can operate on behalf of the owner, it's similar but in this case, the approved address has privileges only to operate on the specific token and not all other tokens of the owner. Mapping `tokenApprovals` holds the record of token IDs and the addresses approved for them so we read the value from this mapping.
 
 ```javascript
 function approve(address _approved, uint256 _tokenId) external payable{
@@ -194,7 +199,7 @@ function setApprovalForAll(address _operator, bool _approved) external{
   emit ApprovalForAll(msg.sender, _operator, _approved);
 }
 ```
-Function used to set the operator who will have permissions to operate on the behalf of the message sender. So basically message sender can assign addresses to operate on his behalf. In this function we require that the operator address we are trying to set approval for is not the message sender because that wouldn't make sense, message sender giving himself permissions to operate on his behalf doesn't make sense so we prevent that. Next we update the mapping `operatorApprovals` with the given value `_approved` which can be set to true or false (boolean type), giving approval or removing one. At the end we emit an `ApprovalForAll` event.
+The function used to set the operator who will have permissions to operate on the behalf of the message sender. So basically message sender can assign addresses to operate on his behalf. In this function we require that the operator address we are trying to set approval for is not the message sender because that wouldn't make sense, message sender giving himself permissions to operate on his behalf doesn't make sense so we prevent that. Next, we update the mapping `operatorApprovals` with the given value `_approved` which can be set to true or false (boolean type), giving approval or removing one. At the end, we emit an `ApprovalForAll` event.
 
 ```javascript
 function clearApproval(address _owner, uint256 _tokenId) internal{
@@ -205,7 +210,7 @@ function clearApproval(address _owner, uint256 _tokenId) internal{
   }
 }
 ```
-Function revokes approvals connected to the token. Only owner can do such operation so we require that message sender is actually the owner of the token. After that we check if approval for token `_tokenId` was given to any address, if it was revoke it by writing null address to the mapping `tokenApprovals`. At the end emit `Approval` event with the approved address equaled to null address meaning that approval was just revoked.
+Function revokes approvals connected to the token. Only owner can do such operation so we require that message sender is actually the owner of the token. After that, we check if approval for token `_tokenId` was given to any address if it was, revoke it by writing null address to the mapping `tokenApprovals`. At the end emit `Approval` event with the approved address equaled to null address meaning that approval was just revoked.
 
 ```javascript
 function addTokenTo(address _to, uint256 _tokenId) internal {
@@ -224,7 +229,7 @@ function removeTokenFrom(address _from, uint256 _tokenId) internal {
   tokenOwner[_tokenId] = address(0);
 }
 ```
-Function removes token owner by settings the owner of the token to null address in the `tokenOwner` mapping. Before that we need to decrement the number of tokens owned by the previous owner. At the beginning we need to check if current owner of the token matches with the gives address. NOTE: <i>Subtraction should be done using safe math library to prevent the possibility of encountering overflow after subtraction.</i>
+The function removes token owner by settings the owner of the token to null address in the `tokenOwner` mapping. Before that, we need to decrement the number of tokens owned by the previous owner. At the beginning, we need to check if the current owner of the token matches with the given address. NOTE: <i>Subtraction should be done using safe math library to prevent the possibility of encountering overflow after subtraction.</i>
 
 
 ```javascript
@@ -241,7 +246,7 @@ function transferFrom(address _from, address _to, uint256 _tokenId) external pay
 
 }
 ```
-Function used to transfer token from one address to another. This basically switches ownership of the token to new address. Modifier `canTransfer` checks if the message sender has approval to operate with given token. Both addresses (`_from` and `_to`) have to be valid so we need to require that they are not null addresses. Previously described functions `clearApproval`, `removeTokenFrom` and `addTokenTo` transfer the token from the old owner to the new. Function at the end emits event `Transfer` which indicates that successful transfer happened.
+The function used to transfer token from one address to another. This basically switches ownership of the token to the new address. Modifier `canTransfer` checks if the message sender has the approval to operate with given token. Both addresses (`_from` and `_to`) have to be valid so we need to require that they are not null addresses. Previously described functions `clearApproval`, `removeTokenFrom` and `addTokenTo` transfer the token from the old owner to the new. Function at the end emits event `Transfer` which indicates that successful transfer happened.
 
 ```javascript
 interface ERC721Receiver {
@@ -278,13 +283,13 @@ function checkAndCallSafeTransfer(address _from, address _to, uint256 _tokenId,b
 
 
 ```
-This part is a little tricky to understand but basically there is a problem if we transfer tokens to the address of a contract that doesn't know how to handle ERC721 tokens, then transferred tokens are lost and there is no way to retrieve them. Solution for this is additional interface called `ERC721Receiver` that contract needs to implement if it wants to receive ERC721 tokens.
+This part is a little tricky to understand but basically, there is a problem if we transfer tokens to the address of a contract that doesn't know how to handle ERC721 tokens, then transferred tokens are lost and there is no way to retrieve them. The solution for this is an additional interface called `ERC721Receiver` that contract needs to implement if it wants to receive ERC721 tokens.
 
-Interface `ERC721Receiver` defines function `onERC721Received` that <b>receiving contract</b> needs to implement (we don't need to implement this, we just call it from our contract), Function needs to return predefined value (constant or magic number) `ERC721_RECEIVED` which is actually the computed from the hash of the function itself. If function doesn't return that value roll back `transferFrom` function.
+Interface `ERC721Receiver` defines function `onERC721Received` that <b>receiving contract</b> needs to implement (we don't need to implement this, we just call it from our contract), Function needs to return predefined value (constant or magic number) `ERC721_RECEIVED` which is actually the computed from the hash of the function itself. If the function doesn't return that value rollback `transferFrom` function.
 
 There are two options for safe transfer, you can call `safeTransferFrom` with or without additional data so that's why we have two functions. The function that doesn't take data parameter calls the other functions with data parameter hardcoded to `""`.
 
-Function `checkAndCallSafeTransfer` checks if the `_to` address is a contract, and if it is we try to call `onERC721Received` on that contract and check return value. If contract returns predefined value `ERC721_RECEIVED` everything is ok and we proceed as transfer completed successfully. To check whether address is a contract we use the function `isContract` from [AddressUtils](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/AddressUtils.sol) library.
+Function `checkAndCallSafeTransfer` checks if the `_to` address is a contract, and if it is we try to call `onERC721Received` on that contract and check the return value. If contract returns predefined value `ERC721_RECEIVED` everything is ok and we proceed as transfer completed successfully. To check whether the address is a contract we use the function `isContract` from [AddressUtils](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/master/contracts/AddressUtils.sol) library.
 
 ```javascript
 function createCryptomon(uint _tokenId, string _name, uint _rarity, uint _type, string _attack1, string _attack2, uint _strength)
@@ -302,4 +307,4 @@ function createCryptomon(uint _tokenId, string _name, uint _rarity, uint _type, 
   tokenCryptomon[_tokenId] = newCryptomon;
 }
  ```
- At the end we can crate function that will be called from the outside and will create new token and assign new Cryptomon to it. This is used just as an example and in real world application we wouldn't allow every user to create it's own Cryptomon because that doesn't make much sense, we could rather create a genesis generation of N Cryptomons and allow them to breed thus creating more Cryptomons.
+ At the end, we can create a function that will be called from the outside and will create a new token and assign new Cryptomon to it. This is used just as an example and in real-world application we wouldn't allow every user to create it's own Cryptomon because that doesn't make much sense, we would rather create a genesis generation of N Cryptomons and allow them to breed thus creating more Cryptomons.
